@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOBIS MACRO 다운로드 가이드</title>
+    <!-- YouTube 오류 코드 153 해결을 위한 referrer 정책 유지 -->
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Tailwind CSS CDN 로드 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 네온 효과를 위한 커스텀 스타일 */
+        .neon-text {
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.6), 0 0 10px rgba(0, 255, 255, 0.4);
+            color: #00FFFF; /* 기본 시안 색상 */
+        }
+
+        .neon-border {
+            border: 2px solid #00FFFF;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+        .neon-border:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 255, 1);
+            transform: scale(1.02);
+        }
+
+        /* 폰트 설정: Inter (Tailwind 기본) + 한국어 가독성 */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d1a; /* 아주 짙은 청회색 배경 */
+            color: #E0E0FF; /* 밝은 회색 텍스트 */
+        }
+        /* 다운로드 버튼 깜빡임 효과 */
+        @keyframes pulse-once {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 255, 255, 1); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); }
+        }
+        .animate-pulse-strong {
+            animation: pulse-once 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        // Smooth Scroll (부드러운 스크롤) 기능
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70, // 고정 헤더 높이만큼 빼기
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+
+        // 텍스트 복사 기능 (사용되지 않지만 유지)
+        function copyText(text, elementId) {
+            document.execCommand('copy', false, text);
+            const button = document.getElementById(elementId);
+            const originalText = button.textContent;
+            button.textContent = '✅ 복사 완료!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 1500);
+        }
+
+        // 간단한 모달 (Alert 대체)
+        function showModal(message) {
+            const modal = document.getElementById('alert-modal');
+            const messageElement = document.getElementById('alert-message');
+            messageElement.textContent = message;
+            modal.classList.remove('hidden');
+
+            // 5초 후 자동 닫기
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 5000);
+        }
+
+        function closeModal() {
+            document.getElementById('alert-modal').classList.add('hidden');
+        }
+
+        // 다운로드 버튼 클릭 시 모달 표시 및 링크 이동
+        function handleDownload(downloadUrl) {
+            showModal('MOBIS Macro 다운로드 페이지로 이동합니다. 브라우저에서 다운로드가 시작됩니다.');
+            // 실제 다운로드를 시뮬레이션하기 위해 새 창에서 링크를 엽니다.
+            window.open(downloadUrl, '_blank');
+        }
+        
+    </script>
+
+
+    <!-- 모달 UI (Alert 대체) -->
+    <div id="alert-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+        <div class="bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-sm neon-border border-cyan-400">
+            <h3 class="text-2xl font-bold neon-text mb-4">알림 (System Message)</h3>
+            <p id="alert-message" class="text-lg text-white mb-6"></p>
+            <button onclick="closeModal()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 rounded-lg transition duration-300">
+                확인
+            </button>
+        </div>
+    </div>
+
+
+    <!-- 고정 네비게이션 바 -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-black bg-opacity-40 border-b border-cyan-900 shadow-lg">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- 타이틀을 다운로드 링크로 감싸서 클릭 가능하게 함 -->
+            <a href="https://github.com/just-person41415/just-person41415.github.io/blob/main/MOBIS%20MACRO.v.0.3.5" 
+               target="_blank" 
+               class="text-2xl font-black neon-text hover:text-cyan-400 transition duration-300">
+                [MOBIS Macro] V0.3.5
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#intro" class="hover:text-cyan-400 transition duration-300">소개</a>
+                <a href="#video" class="hover:text-cyan-400 transition duration-300">기능 영상</a>
+                <a href="#features" class="hover:text-cyan-400 transition duration-300">주요 기능</a>
+                <a href="#guide" class="hover:text-cyan-400 transition duration-300">사용 방법</a>
+                <a href="#download" class="hover:text-cyan-400 transition duration-300">다운로드</a>
+            </div>
+            <a href="#download" class="md:hidden p-2 text-cyan-400 border border-cyan-600 rounded-lg hover:bg-cyan-800 transition">
+                <!-- SVG Icon for Download -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+            </a>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <!-- 1. 히어로 섹션 (Hero Section) - 가장 쩔어보이는 부분 -->
+        <section id="intro" class="text-center pt-20 pb-24 border-b border-cyan-900 mb-20">
+            <div class="flex flex-col items-center">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+                    <!-- 메인 타이틀: 혁신적인 자동화의 새로운 기준을 제공하다. -->
+                    <span class="neon-text block">혁신적인 자동화의</span>
+                    <span class="text-white block mt-2">새로운 기준을 제공하다.</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mb-10">
+                    <!-- 설명 문구 -->
+                    반복되는 업무를 자동화하고 당신의 시간을 극대화하세요. <span class="neon-text font-semibold">[MOBIS Macro]</span>가 해답입니다.
+                </p>
+
+                <!-- 메인 다운로드 CTA (링크 및 텍스트 유지) -->
+                <button onclick="handleDownload('https://github.com/just-person41415/just-person41415.github.io/blob/main/MOBIS%20MACRO.v.0.3.5')" class="bg-cyan-600 hover:bg-cyan-500 text-black font-extrabold py-4 px-12 rounded-full text-xl uppercase tracking-wider transition duration-300 transform hover:scale-105 shadow-xl neon-border border-2 border-cyan-400">
+                    <span class="neon-text text-black">지금 다운로드</span>
+                </button>
+            </div>
+
+            <!-- 시각적 강조 (가상의 매크로 코드 블록) -->
+            <div class="mt-20 p-6 bg-gray-900 rounded-xl shadow-inner neon-border border-cyan-800">
+                <p class="text-left text-sm text-cyan-400 mb-3 font-mono">
+                    // 오픈 소스 프로그램 MOBIS Macro v.0.3.5
+                </p>
+                <pre class="text-left text-sm md:text-base text-gray-300 font-mono overflow-x-auto">
+                    <code class="block whitespace-pre">
+<span class="text-yellow-400">*오픈 소스 프로젝트 확인: </span><a href="https://github.com/just-person41415/just-person41415.github.io" target="_blank" class="text-cyan-400 hover:underline">https://github.com/just-person41415/just-person41415.github.io</a>
+<span class="text-green-400">*MOBIS Macro는 AutoHotkey 기반의 경량화된 자동화 프로그램입니다.</span>
+<span class="text-green-400">*신뢰성과 투명성을 위해 전체 코드가 공개되어 있습니다.</span>
+<span class="text-white">*현재 버전: </span><span class="text-red-400">v.0.3.5</span>
+<span class="text-white">*개발자 전용 버전: </span><span class="text-red-400">v.0.3.6.dev</span>
+                    </code>
+                </pre>
+            </div>
+        </section>
+        
+        <!-- 1.5. 새로운 기능 영상 섹션 (Video Demo Section) -->
+        <section id="video" class="py-16 border-t border-cyan-900 mt-16 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-10 neon-text">🔥 MOBIS Macro의 엄청난 기능 영상</h2>
+
+            <!-- [수정]: 기능 영상 임베드 제거 및 준비 예정 텍스트 추가 -->
+            <div class="max-w-4xl mx-auto mb-10 p-10 bg-gray-900 rounded-xl shadow-2xl neon-border border-cyan-800">
+                <p class="text-2xl md:text-3xl font-semibold text-white">
+                    🔥 MOBIS Macro의 엄청난 기능 영상 <span class="neon-text">준비 예정</span>
+                </p>
+                <p class="text-lg text-gray-400 mt-2">더욱 강력하고 세련된 기능을 담아 곧 돌아오겠습니다!</p>
+            </div>
+            
+        </section>
+        
+        <!-- 2. 주요 기능 (Features) -->
+        <section id="features" class="py-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 neon-text">주요 기능: 왜 [MOBIS Macro]인가?</h2>
+
+            <!-- 4개 항목을 위한 반응형 그리드: sm에서는 2개, lg 이상에서는 4개 -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+                <!-- 기능 카드 1: 초고속 작동 -->
+                <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-cyan-600 shadow-xl hover:shadow-cyan-900/50 transition duration-500 transform hover:-translate-y-1">
+                    <span class="text-5xl neon-text block mb-4">
+                        <!-- SVG Icon: Flash -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </span>
+                    <h3 class="text-2xl font-semibold text-white mb-3">01. ⚡️ 초고속 작동</h3>
+                    <p class="text-gray-400">최적화된 코딩으로 사람의 업무 속도 대비 200% 빠른 처리 속도를 자랑합니다. 딜레이 없는 최적화된 작동을 경험하세요.</p>
+                </div>
+
+                <!-- 기능 카드 2: 편리한 사용 -->
+                <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-cyan-600 shadow-xl hover:shadow-cyan-900/50 transition duration-500 transform hover:-translate-y-1">
+                    <span class="text-5xl neon-text block mb-4">
+                         <!-- SVG Icon: User-friendly -->
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6h2m4-2a2 2 0 100-4m0 4a2 2 0 110-4m0-2h2m4 0h2m-4 2h2m-4 2a2 2 0 100-4m0 4a2 2 0 110-4m0-2h2m4 0h2m-4 2h2m-4 2a2 2 0 100-4m0 4a2 2 0 110-4m0-2h2m4 0h2m-4 2h2"/>
+                         </svg>
+                    </span>
+                    <h3 class="text-2xl font-semibold text-white mb-3">02. ✨ 편리한 사용</h3>
+                    <p class="text-gray-400">간단한 UI와 자세한 설명으로 모든 연령대의 사람들이 쉽게 사용할 수 있습니다. 매크로 입문자에게 최적화되었습니다.</p>
+                </div>
+
+                <!-- 기능 카드 3: 보안된 안전성 -->
+                <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-cyan-600 shadow-xl hover:shadow-cyan-900/50 transition duration-500 transform hover:-translate-y-1">
+                    <span class="text-5xl neon-text block mb-4">
+                        <!-- SVG Icon: Shield -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.636-4.364a9 9 0 11-12.728 0 9 9 0 0112.728 0z"/>
+                        </svg>
+                    </span>
+                    <h3 class="text-2xl font-semibold text-white mb-3">03. 🛡️ 보안된 안전성</h3>
+                    <p class="text-gray-400">오픈 소스 기반으로 안전이 확실히 검증된 프로그램입니다. 불필요한 기능 없이 핵심 자동화만 제공하여 믿고 사용할 수 있습니다.</p>
+                </div>
+
+                <!-- 기능 카드 4: 사용자 맞춤 성능 (새로 추가됨) -->
+                <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-cyan-600 shadow-xl hover:shadow-cyan-900/50 transition duration-500 transform hover:-translate-y-1">
+                    <span class="text-5xl neon-text block mb-4">
+                        <!-- SVG Icon: Gear (톱니바퀴) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </span>
+                    <h3 class="text-2xl font-semibold text-white mb-3">04. ⚙️ 사용자 맞춤 성능</h3>
+                    <p class="text-gray-400">사용자의 컴퓨터 성능에 맞추어 매크로의 성능을 세세한 단계별로 구성할 수 있습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 매크로 사용 가이드 (Guide) -->
+        <section id="guide" class="py-16 border-t border-cyan-900 mt-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 neon-text">사용 가이드: 3단계로 시작하기</h2>
+
+            <div class="space-y-12 max-w-4xl mx-auto">
+                
+                <!-- STEP 1: AutoHotkey 다운로드 -->
+                <div class="flex flex-col md:flex-row bg-gray-900 rounded-xl p-6 neon-border border-cyan-800">
+                    <div class="text-6xl font-black neon-text mr-6 mb-4 md:mb-0 w-16 flex-shrink-0">1.</div>
+                    <div class="flex-grow">
+                        <h3 class="text-3xl font-bold text-white mb-2">AutoHotkey v.1.1 다운로드</h3>
+                        <p class="text-gray-400 mb-4">MOBIS Macro 실행을 위한 필수 엔진인 AutoHotkey를 설치합니다.</p>
+                        <a href="https://buly.kr/2qZR3sO" target="_blank" class="text-cyan-400 hover:text-cyan-300 font-semibold text-lg underline transition duration-200">
+                            다운로드
+                        </a>
+                        <p class="text-gray-500 mt-2 text-sm">다운로드 후 설치 파일을 열어 세팅을 완료해 주세요.</p>
+                    </div>
+                </div>
+
+                <!-- STEP 2: MOBIS Macro 다운로드 -->
+                <div class="flex flex-col md:flex-row bg-gray-900 rounded-xl p-6 neon-border border-cyan-800">
+                    <div class="text-6xl font-black neon-text mr-6 mb-4 md:mb-0 w-16 flex-shrink-0">2.</div>
+                    <div class="flex-grow">
+                        <h3 class="text-3xl font-bold text-white mb-2">MOBIS Macro v.0.3.5 다운로드</h3>
+                        <p class="text-gray-400 mb-4">링크로 들어가 다운로드 버튼을 눌러 파일을 다운로드하고, 다운로드한 파일을 보기 쉬운 곳에 둡니다.</p>
+                        <!-- Standard Download -->
+                        <div class="mb-2">
+                             <a href="https://github.com/just-person41415/just-person41415.github.io/blob/main/MOBIS%20MACRO.v.0.3.5" target="_blank" class="text-cyan-400 hover:text-cyan-300 font-semibold text-lg underline transition duration-200">
+                                다운로드 (안정 버전 v.0.3.5)
+                            </a>
+                        </div>
+                        <!-- Developer Download -->
+                        <a href="https://github.com/just-person41415/just-person41415.github.io/blob/main/MOBIS%20MACRO.v.0.3.6.dev" target="_blank" class="text-red-400 hover:text-red-300 font-semibold text-sm underline transition duration-200">
+                            개발자 버전 (불안정 v.0.3.6.dev) 다운로드
+                        </a>
+                    </div>
+                </div>
+
+                <!-- STEP 3: AutoHotkey로 열기 -->
+                <div class="flex flex-col md:flex-row bg-gray-900 rounded-xl p-6 neon-border border-cyan-800">
+                    <div class="text-6xl font-black neon-text mr-6 mb-4 md:mb-0 w-16 flex-shrink-0">3.</div>
+                    <div class="flex-grow">
+                        <h3 class="text-3xl font-bold text-white mb-2">AutoHotkey로 실행</h3>
+                        <p class="text-gray-400 mb-4">MOBIS Macro 파일을 <span class="text-cyan-400 font-semibold">마우스 오른쪽 클릭</span> → <span class="text-cyan-400 font-semibold">연결 프로그램</span> → AutoHotkey를 선택하여 실행합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 4. 다운로드 섹션 (Download - 영상 및 시스템 요구사항, 업데이트 목록) -->
+        <section id="download" class="py-16 border-t border-cyan-900 mt-16 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-10 neon-text">다운로드 가이드 영상</h2>
+
+            <!-- Video Container: 표준 임베드 iframe (다운로드 가이드 영상) -->
+            <div class="max-w-4xl mx-auto mb-10">
+                <div class="relative block w-full overflow-hidden rounded-xl shadow-2xl" 
+                     style="padding-top: 56.25%;">
+                    
+                    <!-- YouTube Embedded Player (video ID: NsoJK4PCQAE) - youtube-nocookie.com 도메인 적용 -->
+                    <iframe 
+                        class="absolute top-0 left-0 w-full h-full rounded-xl"
+                        src="https://www.youtube-nocookie.com/embed/NsoJK4PCQAE?rel=0" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- 시스템 요구사항 (추천 사항) -->
+            <div class="max-w-xl mx-auto mb-10 p-6 bg-gray-900 rounded-xl neon-border border-cyan-800">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-4">시스템 요구사항 (추천 사항)</h3>
+                <div class="grid grid-cols-2 text-left gap-4 text-gray-400">
+                    <p>✅ OS: Windows 10 이상</p>
+                    <p>✅ RAM: 8GB 이상</p>
+                    <p>✅ CPU: Intel Core i5 시리즈 또는 Ryzen 5 시리즈 이상</p>
+                    <p>✅ Disk: 10MB 이상의 여유 공간</p>
+                </div>
+            </div>
+
+            <!-- [추가]: 업데이트 목록 -->
+            <div class="max-w-xl mx-auto mb-10 p-6 bg-gray-900 rounded-xl neon-border border-cyan-800 text-left">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-4">최신 업데이트 목록</h3>
+                
+                <div class="mb-4">
+                    <h4 class="text-xl font-semibold text-white mb-2">⭐ 안정 버전 v.0.3.5 업데이트</h4>
+                    <ul class="list-disc list-inside text-gray-400 ml-4 space-y-1">
+                        <li>코드를 최적화했습니다.</li>
+                        <li>'오늘의 코드' 생성 방식을 간소화했습니다.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-semibold text-red-400 mb-2">🛠️ 개발자 버전 v.0.3.6.dev 진행 사항</h4>
+                    <ul class="list-disc list-inside text-gray-500 ml-4 space-y-1">
+                        <li>모든 해상도에서 작동하게 변경 (<span class="text-red-600">X</span>)</li>
+                        <li>공식 사이트 링크 첨부 (<span class="text-red-600">X</span>)</li>
+                        <li>흔히 발생하는 오류 수정법 첨부 (<span class="text-red-600">X</span>)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 다운로드 버튼 -->
+            <button onclick="handleDownload('https://github.com/just-person41415/just-person41415.github.io/blob/main/MOBIS%20MACRO.v.0.3.5')" class="bg-cyan-600 hover:bg-cyan-500 text-black font-extrabold py-5 px-16 rounded-full text-2xl uppercase tracking-wider transition duration-300 transform hover:scale-110 shadow-xl neon-border border-4 border-cyan-400 animate-pulse-strong">
+                <span class="neon-text text-black">MOBIS Macro V0.3.5 Download (안정 버전)</span>
+            </button>
+            <p class="text-sm text-gray-500 mt-4">공식 다운로드 링크 (v.0.3.5)</p>
+        </section>
+
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="bg-gray-900 border-t border-cyan-900 py-8 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+            <p>&copy; 2025 MOBIS Macro team. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
